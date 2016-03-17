@@ -1,0 +1,23 @@
+ $musicapi = "http://s.music.163.com/search/get/?type=1&s=$keywordc&limit=1";
+
+ type 类型
+
+ s    关键字
+
+ limit 限制条数
+
+
+列表api 
+
+http://tingapi.ting.baidu.com/v1/restserver/ting?from=qianqian&version=2.1.0&method=baidu.ting.billboard.billList&format=json&type=1&offset=0&size=10
+
+format 数据类型
+type   分类列表
+size   条数
+
+
+create table `music`(
+	id  int not null auto_increment primary key,
+	openid char(50) not null,
+	music  char(50) not null
+); 
