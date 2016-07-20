@@ -49,12 +49,6 @@ class wechatCallbackapiTest {
                 //$content = '点歌信仰';
 
                 if (strpos($content, '点歌') !== false) {
-                    /*$url = 'http://s.music.163.com/search/get/?type=1&s=[$keyword]&limit=1';  //API地址
-                    $contentStr = file_get_contents($url); //把网页内容获取到当前
-                    $msgType = "text";
-                    //$contentStr = $keyword;  //复读机
-                    $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                    //echo $resultStr;*/
                     $this->getMusic($postObj,$msg);
                 }
             } else {
@@ -71,7 +65,7 @@ class wechatCallbackapiTest {
 
       $keyword = mb_substr($msg, 2, mb_strlen($msg, 'utf-8'), 'utf-8');
 
-      $url = 'http://s.music.163.com/search/get/?type=1&s=[$keyword]&limit=1';
+      $url = "http://s.music.163.com/search/get/?type=1&s=[$keyword]&limit=1";
       $content = file_get_contents($url); //把网页内容获取到当前
       //把json解析成PHP能认识的数据
       //var_dump(json_decode($content,true));
@@ -79,7 +73,7 @@ class wechatCallbackapiTest {
       //echo $music;
       $add = $music["result"]["songs"]["0"]["audio"];  //地址
       $songName = $music["result"]["songs"]["0"]["name"];  //歌曲名
-      $songer = $music["result"]["songs"]["0"]["artist"][0]['name'];  //歌手
+      $songer = $music["result"]["songs"]["0"]["artists"][0]['name'];  //歌手
 
       $musictpl = "<xml>
       <ToUserName><![CDATA[%s]]></ToUserName>
@@ -97,10 +91,8 @@ class wechatCallbackapiTest {
       $fromUsername = $postObj->FromUserName;
       $toUsername = $postObj->ToUserName;
       $time = time();
-
-      $msgType = "text";
-      //$contentStr = $keyword;  //复读机
-      $resultStr = sprintf($musictpl, $fromUsername, $toUsername, $time, $songName, $songer, $add, $add);
+      $msgType = "music";
+      $resultStr = sprintf($musictpl, $fromUsername, $toUsername, $time, $msgType,$songName, $songer, $add, $add);
       echo $resultStr;
       } 
 
